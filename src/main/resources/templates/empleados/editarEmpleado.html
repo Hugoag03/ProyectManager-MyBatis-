@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar departamento</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Gestión de Proyectos</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/proyectos}">Proyectos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/empleados}">Empleados</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/departamentos}">Departamentos</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <h2>Editar empleado</h2>
+    <form th:object="${empleado}" method="post" th:action="@{/empleados/editar/{id}(id=${empleado.id})}">
+        <div class="form-group" required>
+            <label for="nombre">Nombre: </label>
+            <input type="text" class="form-control" id="nombre" th:field="*{nombre}">
+        </div>
+        <div class="form-group" required>
+            <label for="apellido">Apellido: </label>
+            <input type="text" class="form-control" id="apellido" th:field="*{apellido}">
+        </div>
+        <div class="form-group" required>
+            <label for="salario">Salario: </label>
+            <input type="text" class="form-control" id="salario" th:field="*{salario}">
+        </div>
+
+        <div class="form-group">
+            <label for="departamento_id">Departamento: </label>
+            <select class="form-control" name="departamento_id" id="departamento_id" required>
+                <option>Sin departamento</option>
+                <option th:each="departamento : ${departamentos}" th:value="${departamento.id}"
+                        th:text="${departamento.nombre}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="proyecto_id">Proyectos: </label>
+            <select class="form-control" multiple name="proyecto_id" id="proyecto_id">
+
+                <option th:each="proyecto : ${proyectos}" th:value="${proyecto.id}"
+                        th:text="${proyecto.nombre}"></option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+        <a class="btn btn-danger btn-sm" th:href="@{/empleados}">Cancelar</a>
+    </form>
+
+</div>
+
+</body>
+</html>
